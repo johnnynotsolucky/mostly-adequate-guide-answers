@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "example:part1": "babel-node exercises/part1/example",
     "test": "mocha --require babel-polyfill --compilers js:babel-register exercises/**/*.spec.js"
   },
   "author": "Tyrone Tudehope",
@@ -11,7 +12,8 @@
   "dependencies": {
     "accounting": "^0.4.1",
     "babel-polyfill": "^6.22.0",
-    "ramda": "^0.23.0"
+    "ramda": "^0.23.0",
+    "request": "^2.79.0"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
