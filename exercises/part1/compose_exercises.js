@@ -87,9 +87,9 @@ const sortByHorsepower = R.sortBy(R.prop('horsepower'));
 // const out = (name) => `${name} is the fastest`;
 
 // From the "official" answers:
-const prepend = R.flip(R.concat);
+const append = R.flip(R.concat);
 const fastestCar = R.compose(
-  prepend(' is the fastest'),
+  append(' is the fastest'),
   R.prop('name'),
   R.last,
   sortByHorsepower);
