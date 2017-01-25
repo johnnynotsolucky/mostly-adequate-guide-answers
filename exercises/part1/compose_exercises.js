@@ -1,4 +1,4 @@
-import _ from 'ramda';
+import R from 'ramda';
 import accounting from 'accounting';
 
 // Example Data
@@ -36,24 +36,24 @@ const CARS = [{
 
 // Exercise 1:
 // ============
-// Use _.compose() to rewrite the function below. Hint: _.prop() is curried.
-const inStock = _.prop('in_stock');
-const isLastInStock = _.compose(inStock, _.last);
-// Alternative: _.compose(inStock('in_stock'), _.last);
+// Use R.compose() to rewrite the function below. Hint: R.prop() is curried.
+const inStock = R.prop('in_stock');
+const isLastInStock = R.compose(inStock, R.last);
+// Alternative: R.compose(inStock('in_stock'), R.last);
 
 // Exercise 2:
 // ============
-// Use _.compose(), _.prop() and _.head() to retrieve the name of the first car.
-const nameOfCar = _.prop('name');
-const nameOfFirstCar = _.compose(nameOfCar, _.head);
+// Use R.compose(), R.prop() and R.head() to retrieve the name of the first car.
+const nameOfCar = R.prop('name');
+const nameOfFirstCar = R.compose(nameOfCar, R.head);
 
 // Exercise 3:
 // ============
 // Use the helper function _average to refactor averageDollarValue as a composition.
-const _average = (xs) => _.reduce(_.add, 0, xs) / xs.length; // <- leave be
+const _average = (xs) => R.reduce(R.add, 0, xs) / xs.length; // <- leave be
 
-const mapToDollarValue = _.map(_.prop('dollar_value'));
-const averageDollarValue = _.compose(_average, mapToDollarValue);
+const mapToDollarValue = R.map(R.prop('dollar_value'));
+const averageDollarValue = R.compose(_average, mapToDollarValue);
 
 // Exercise 4:
 // ============
@@ -61,10 +61,10 @@ const averageDollarValue = _.compose(_average, mapToDollarValue);
 // lowercase and underscored car's names:
 // e.g: sanitizeNames([{name: 'Ferrari FF', horsepower: 660, dollar_value: 700000, in_stock: true}])
 // => ['ferrari_ff'].
-const _underscore = _.replace(/\W+/g, '_'); //<-- leave this alone and use to sanitize
+const _underscore = R.replace(/\W+/g, '_'); //<-- leave this alone and use to sanitize
 const _lowercase = (str) => str.toLowerCase();
-const sanitizeInput = _.compose(_underscore, _lowercase, _.prop('name'));
-var sanitizeNames = _.map(sanitizeInput);
+const sanitizeInput = R.compose(_underscore, _lowercase, R.prop('name'));
+var sanitizeNames = R.map(sanitizeInput);
 
 // Bonus 1:
 // ============
@@ -75,23 +75,23 @@ const join = (joinWith) => {
     return xs.join(joinWith);
   };
 };
-const formatMoney = _.compose(accounting.formatMoney, _.prop('dollar_value'));
-const availablePrices = _.compose(join(', '), _.map(formatMoney), _.filter(inStock));
+const formatMoney = R.compose(accounting.formatMoney, R.prop('dollar_value'));
+const availablePrices = R.compose(join(', '), R.map(formatMoney), R.filter(inStock));
 
 // Bonus 2:
 // ============
-// Refactor to pointfree. Hint: you can use _.flip().
+// Refactor to pointfree. Hint: you can use R.flip().
 
-const sortByHorsepower = _.sortBy(_.prop('horsepower'));
+const sortByHorsepower = R.sortBy(R.prop('horsepower'));
 // This is not actually pointfree
 // const out = (name) => `${name} is the fastest`;
 
 // From the "official" answers:
-const prepend = _.flip(_.concat);
-const fastestCar = _.compose(
+const prepend = R.flip(R.concat);
+const fastestCar = R.compose(
   prepend(' is the fastest'),
-  _.prop('name'),
-  _.last,
+  R.prop('name'),
+  R.last,
   sortByHorsepower);
 
 export default {
