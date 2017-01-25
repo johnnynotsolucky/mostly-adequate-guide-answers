@@ -1,25 +1,26 @@
+import R from 'ramda';
 // Exercise 1
 //==============
 // Refactor to remove all arguments by partially applying the function.
 
-const split = (split) => {
-  return (str) => {
-    return str.split(split);
-  };
-};
-
+// const split = (split) => {
+//   return (str) => {
+//     return str.split(split);
+//   };
+// };
+const split = R.curry((split, str) => str.split(split));
 const words = split(' ');
 
 // Exercise 1a
 //==============
 // Use map to make a new words fn that works on an array of strings.
 
-const map = (fn) => {
-  return (arr) => {
-    return arr.map(fn);
-  };
-};
-
+// const map = (fn) => {
+//   return (arr) => {
+//     return arr.map(fn);
+//   };
+// };
+const map = R.curry((fn, arr) => arr.map(fn));
 const sentences = map(words);
 
 
@@ -27,18 +28,19 @@ const sentences = map(words);
 //==============
 // Refactor to remove all arguments by partially applying the functions.
 
-const match = (pattern) => {
-  return (x) => {
-    return x.match(pattern);
-  };
-};
+// const match = (pattern) => {
+//   return (x) => {
+//     return x.match(pattern);
+//   };
+// };
+const match = R.curry((pattern, x) => x.match(pattern));
 
-const filter = (fn) => {
-  return (xs) => {
-    return xs.filter(fn);
-  };
-};
-
+// const filter = (fn) => {
+//   return (xs) => {
+//     return xs.filter(fn);
+//   };
+// };
+const filter = R.curry((fn, xs) => xs.filter(fn));
 const filterQs = filter(match(/q/i));
 
 // Exercise 3
@@ -49,12 +51,12 @@ const filterQs = filter(match(/q/i));
 // LEAVE BE:
 const _keepHighest = (x, y) => x >= y ? x : y;
 
-const reduce = (fn, initialValue) => {
-  return (arr) => {
-    return arr.reduce(fn, initialValue);
-  };
-};
-
+// const reduce = (fn, initialValue) => {
+//   return (arr) => {
+//     return arr.reduce(fn, initialValue);
+//   };
+// };
+const reduce = R.curry((fn, initialValue, arr) => arr.reduce(fn, initialValue));
 const max = reduce(_keepHighest, -Infinity);
 
 
@@ -62,14 +64,15 @@ const max = reduce(_keepHighest, -Infinity);
 // ============
 // Wrap array's slice to be functional and curried.
 // //[1, 2, 3].slice(0, 2)
-const slice = (start) => {
-  return (end) => {
-    return (arr) => {
-      return arr.slice(start, end);
-    };
-  };
-};
 
+// const slice = (start) => {
+//   return (end) => {
+//     return (arr) => {
+//       return arr.slice(start, end);
+//     };
+//   };
+// };
+const slice = R.curry((start, end, arr) => arr.slice(start, end));
 
 // Bonus 2:
 // ============
