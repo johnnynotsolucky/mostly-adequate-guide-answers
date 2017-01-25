@@ -70,13 +70,6 @@ var sanitizeNames = _.map(sanitizeInput);
 // ============
 // Refactor availablePrices with compose.
 
-var _availablePrices = function(cars) {
-  var available_cars = _.filter(_.prop('in_stock'), cars);
-  return available_cars.map(function(x) {
-    return accounting.formatMoney(x.dollar_value);
-  }).join(', ');
-};
-
 const join = (joinWith) => {
   return (xs) => {
     return xs.join(joinWith);
@@ -90,8 +83,16 @@ const availablePrices = _.compose(join(', '), _.map(formatMoney), _.filter(inSto
 // Refactor to pointfree. Hint: you can use _.flip().
 
 const sortByHorsepower = _.sortBy(_.prop('horsepower'));
-const out = (name) => `${name} is the fastest`;
-const fastestCar = _.compose(out, _.prop('name'), _.last, sortByHorsepower);
+// This is not actually pointfree
+// const out = (name) => `${name} is the fastest`;
+
+// From the "official" answers:
+const prepend = _.flip(_.concat);
+const fastestCar = _.compose(
+  prepend(' is the fastest'),
+  _.prop('name'),
+  _.last,
+  sortByHorsepower);
 
 export default {
   CARS,
